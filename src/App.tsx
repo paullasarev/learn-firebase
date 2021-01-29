@@ -8,6 +8,7 @@ function App() {
 
   useEffect(() => {
     api.filestoreLoadCollection('projects');
+    api.storageListFiles();
   }, []);
 
   return (
