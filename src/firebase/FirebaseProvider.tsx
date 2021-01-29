@@ -13,26 +13,7 @@ const FirebaseContext = createContext({
 export { FirebaseContext };
 
 export const FirebaseProvider  = ({ children }: { children: any }) => {
-  // let firebase = {
-  //   app: null,
-  //   database: null
-  // }
-
   const dispatch = useDispatch();
-
-  // check if firebase app has been initialized previously
-  // if not, initialize with the config we saved earlier
-  // if (!app.apps.length) {
-  //   app.initializeApp(firebaseConfig);
-  //   firebase = {
-  //     app: FirebaseApp,
-  //     database: FirebaseApp.database(),
-  //
-  //     api: {
-  //       getTodos
-  //     }
-  //   }
-  // }
 
   const db = FirebaseApp.firestore();
   const database = FirebaseApp.database();
