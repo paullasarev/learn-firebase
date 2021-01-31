@@ -4,11 +4,13 @@ import { AppBar, makeStyles, Paper, Tab } from '@material-ui/core';
 
 import AppLogo from '../../components/AppLogo/AppLogo';
 import { Projects } from '../../components/Projects/Projects';
-import { Project } from './types';
+import { FirebaseStorage } from '../../components/FirebaseStorage/FirebaseStorage';
+import { Project, StorageItem } from './types';
 import styles from './Dashboard.module.css';
 
 export interface DashboardViewProps {
   projects: Project[];
+  storage: StorageItem[];
 }
 
 export const useStyles = makeStyles((theme) => ({
@@ -24,7 +26,7 @@ export enum DashboardTab {
   Storage = 'Storage',
 }
 
-export const DashboardView: FunctionComponent<DashboardViewProps> = ({ projects }) => {
+export const DashboardView: FunctionComponent<DashboardViewProps> = ({ projects, storage }) => {
   const classes = useStyles();
 
   const [value, setValue] = useState(DashboardTab.Logo);
@@ -47,9 +49,11 @@ export const DashboardView: FunctionComponent<DashboardViewProps> = ({ projects 
           <AppLogo />
         </TabPanel>
         <TabPanel value={DashboardTab.Projects} className={styles.TabPanel}>
-          <Projects projects={projects}/>
+          <Projects items={projects}/>
         </TabPanel>
-        <TabPanel value={DashboardTab.Storage} className={styles.TabPanel}>Storage</TabPanel>
+        <TabPanel value={DashboardTab.Storage} className={styles.TabPanel}>
+          <FirebaseStorage items={storage}/>
+        </TabPanel>
       </TabContext>
     </Paper>
   );

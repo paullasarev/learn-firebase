@@ -1,10 +1,10 @@
 import { FunctionComponent } from 'react';
 import { makeStyles, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 
-import { Project } from '../../containers/Dashboard/types';
+import { StorageItem } from '../../containers/Dashboard/types';
 
-export interface ProjectsProps {
-  items: Project[];
+export interface FirebaseStorageProps {
+  items: StorageItem[];
 }
 
 const useStyles = makeStyles({
@@ -13,7 +13,7 @@ const useStyles = makeStyles({
   },
 });
 
-export const Projects: FunctionComponent<ProjectsProps> = ({items}) => {
+export const FirebaseStorage: FunctionComponent<FirebaseStorageProps> = ({items}) => {
   const classes = useStyles();
 
   return (
@@ -22,7 +22,7 @@ export const Projects: FunctionComponent<ProjectsProps> = ({items}) => {
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
-            <TableCell>Description</TableCell>
+            <TableCell>Full Path</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -31,7 +31,7 @@ export const Projects: FunctionComponent<ProjectsProps> = ({items}) => {
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>
-              <TableCell>{row.description}</TableCell>
+              <TableCell>{row.fullPath}</TableCell>
             </TableRow>
           ))}
         </TableBody>

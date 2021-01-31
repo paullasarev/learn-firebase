@@ -1,5 +1,6 @@
 import React, { createContext, useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
+import { map } from 'lodash';
 
 import { FirebaseApp } from './FirebaseApp';
 import { fbFilestoreGetCollection, fbStorageList } from './actions';
@@ -12,7 +13,7 @@ const FirebaseContext = createContext({
 
 export { FirebaseContext };
 
-export const FirebaseProvider  = ({ children }: { children: any }) => {
+export const FirebaseProvider = ({ children }: { children: any }) => {
   const dispatch = useDispatch();
 
   const db = FirebaseApp.firestore();
@@ -35,13 +36,11 @@ export const FirebaseProvider  = ({ children }: { children: any }) => {
     [db, dispatch],
   );
   const storageListFiles = useCallback(() => {
-    // const listRef = storageRef.child('files/uid');
     const listRef = storageRef;
     listRef.listAll().then((list) => {
-      dispatch(fbStorageList(list.items));
+      dispatch(fbStorageList(map(list.items, ({ name, fullPath }) => ({ name, fullPath }))));
     });
   }, [storageRef, dispatch]);
-
 
   const firebase = useMemo(() => {
     return {
