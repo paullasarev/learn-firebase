@@ -54,7 +54,7 @@ export const FirebaseProvider  = ({ children }: { children: any }) => {
         storageListFiles,
       },
     };
-  }, [db, database, filestoreLoadCollection]);
+  }, [db, database, filestoreLoadCollection, storage, storageRef, storageListFiles]);
 
   return <FirebaseContext.Provider value={firebase}>{children}</FirebaseContext.Provider>;
 };

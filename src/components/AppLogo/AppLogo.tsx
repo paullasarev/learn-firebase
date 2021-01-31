@@ -1,16 +1,9 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
+
 import logo from './logo.svg';
-import styles from './App.module.css';
-import { FirebaseContext } from './firebase/FirebaseProvider';
+import styles from './AppLogo.module.css';
 
-function App() {
-  const { api } = useContext(FirebaseContext);
-
-  useEffect(() => {
-    api.filestoreLoadCollection('projects');
-    api.storageListFiles();
-  }, []);
-
+function AppLogo() {
   return (
     <div  className={styles.App}>
       <header className={styles.AppHeader}>
@@ -31,4 +24,4 @@ function App() {
   );
 }
 
-export default App;
+export default AppLogo;

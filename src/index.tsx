@@ -1,20 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import '@fontsource/roboto';
 
 import './index.css';
-import App from './App';
+import { App } from './app/App';
 import reportWebVitals from './reportWebVitals';
-import { store } from './configureStore';
-import { FirebaseProvider } from './firebase/FirebaseProvider';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <FirebaseProvider>
-        <App />
-      </FirebaseProvider>
-    </Provider>
+    <App/>
   </React.StrictMode>,
   document.getElementById('root'),
 );

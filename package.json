@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.6.2",
+    "@types/history": "^4.7.8",
     "@types/jest": "^26.0.20",
     "@types/node": "^12.19.15",
     "@types/react": "^16.14.2",
@@ -42,13 +43,26 @@
     ]
   },
   "devDependencies": {
+    "@fontsource/roboto": "^4.1.0",
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/lab": "^4.0.0-alpha.57",
+    "@types/classnames": "^2.2.11",
+    "@types/react-router": "^5.1.11",
     "@types/redux-logger": "^3.0.8",
+    "beautiful-react-hooks": "^0.31.0",
+    "classname": "0.0.0",
+    "classnames": "^2.2.6",
+    "connected-react-router": "^6.8.0",
     "firebase": "^8.2.4",
+    "history": "4.10.1",
     "lodash": "^4.17.20",
     "prettier": "^2.2.1",
     "react-redux": "^7.2.2",
+    "react-redux-router": "0.0.14",
+    "react-router": "^5.2.0",
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0"
   }
 }

@@ -1,0 +1,7 @@
+.Dashboard {
+  height: 100%;
+}
+
+.TabPanel {
+  height: calc(100% - 100px);
+}
