@@ -19,8 +19,11 @@ export function firebase(state = initialState, action: Action) {
       case FB_FILESTORE_GET_COLLECTION: {
         const { name, data } = action.payload;
         return {
-          [name]: data,
           ...state,
+          collections: {
+            ...state.collections,
+            [name]: data,
+          },
         };
       }
       default:

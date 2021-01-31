@@ -12,7 +12,7 @@ export const Dashboard = () => {
   useEffect(() => {
     api.filestoreLoadCollection('projects');
     api.storageListFiles();
-  }, []);
+  }, [api]);
 
   const projects = useSelectorFactory<Project[]>(getCollection, 'projects');
 

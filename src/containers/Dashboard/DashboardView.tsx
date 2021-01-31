@@ -3,6 +3,7 @@ import { TabContext, TabPanel, TabList } from '@material-ui/lab';
 import { AppBar, makeStyles, Paper, Tab } from '@material-ui/core';
 
 import AppLogo from '../../components/AppLogo/AppLogo';
+import { Projects } from '../../components/Projects/Projects';
 import { Project } from './types';
 import styles from './Dashboard.module.css';
 
@@ -17,10 +18,16 @@ export const useStyles = makeStyles((theme) => ({
   },
 }));
 
+export enum DashboardTab {
+  Logo = 'Logo',
+  Projects = 'Projects',
+  Storage = 'Storage',
+}
+
 export const DashboardView: FunctionComponent<DashboardViewProps> = ({ projects }) => {
   const classes = useStyles();
 
-  const [value, setValue] = useState('1');
+  const [value, setValue] = useState(DashboardTab.Logo);
 
   const handleChange = useCallback((event, newValue) => {
     setValue(newValue);
@@ -30,17 +37,19 @@ export const DashboardView: FunctionComponent<DashboardViewProps> = ({ projects 
     <Paper className={styles.Dashboard}>
       <TabContext value={value}>
         <AppBar position="static" className={classes.root}>
-          <TabList onChange={handleChange} aria-label="simple tabs example">
-            <Tab label="App Logo" value="1" />
-            <Tab label="Item Two" value="2" />
-            <Tab label="Item Three" value="3" />
+          <TabList onChange={handleChange} aria-label="Dashboard">
+            <Tab label="App Logo" value={DashboardTab.Logo} />
+            <Tab label="Projects" value={DashboardTab.Projects} />
+            <Tab label="Storage" value={DashboardTab.Storage} />
           </TabList>
         </AppBar>
-        <TabPanel value="1" className={styles.TabPanel}>
+        <TabPanel value={DashboardTab.Logo} className={styles.TabPanel}>
           <AppLogo />
         </TabPanel>
-        <TabPanel value="2" className={styles.TabPanel}>Item Two</TabPanel>
-        <TabPanel value="3" className={styles.TabPanel}>Item Three</TabPanel>
+        <TabPanel value={DashboardTab.Projects} className={styles.TabPanel}>
+          <Projects projects={projects}/>
+        </TabPanel>
+        <TabPanel value={DashboardTab.Storage} className={styles.TabPanel}>Storage</TabPanel>
       </TabContext>
     </Paper>
   );
