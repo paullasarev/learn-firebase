@@ -1,5 +1,6 @@
-import { Action, FB_FILESTORE_GET_COLLECTION, FB_STORAGE_LIST } from './actions';
 import { DefaultRootState } from 'react-redux';
+
+import { Action, FB_FILESTORE_GET_COLLECTION, FB_STORAGE_LIST } from './actions';
 
 interface State {
   collections: {
@@ -14,17 +15,15 @@ const initialState: State = {
 };
 
 interface RootState {
-  firebase: State,
+  firebase: State;
 }
 
 export const getCollection = <T>(name: string) => (state: RootState) => {
   return (state.firebase.collections[name] || []) as T[];
 };
 
-export const getStorage = <T>(state: DefaultRootState) => ((state as RootState).firebase.storage as T[]);
-// export function getStorage<T> (state: DefaultRootState): T[] {
-//   return (state as RootState).firebase.storage as T[];
-// }
+export const getStorage = <T>() => (state: DefaultRootState) =>
+  (state as RootState).firebase.storage as T[];
 
 export function firebase(state = initialState, action: Action) {
   switch (action.type) {

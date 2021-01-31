@@ -1,6 +1,5 @@
 import { useContext, useEffect } from 'react';
 
-import { DefaultRootState, useSelector } from 'react-redux';
 import { FirebaseContext } from '../../firebase/FirebaseProvider';
 import { getCollection, getStorage } from '../../firebase/reducer';
 import { useSelectorFactory } from '../../hooks/useSelecorFactory';
@@ -16,7 +15,7 @@ export const Dashboard = () => {
   }, [api]);
 
   const projects = useSelectorFactory<Project[]>(getCollection, 'projects');
-  const storage: StorageItem[] = useSelector<DefaultRootState, StorageItem[]>(getStorage);
+  const storage = useSelectorFactory<StorageItem[]>(getStorage);
 
   return (
     <DashboardView {...{projects, storage}}/>
