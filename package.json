@@ -57,6 +57,7 @@
     "firebase": "^8.2.4",
     "history": "4.10.1",
     "lodash": "^4.17.20",
+    "lodash-lens": "^1.0.3",
     "prettier": "^2.2.1",
     "react-redux": "^7.2.2",
     "react-redux-router": "0.0.14",

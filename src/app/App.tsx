@@ -1,16 +1,15 @@
 import React, { FunctionComponent, useMemo } from 'react';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
-import { Redirect, Route, Switch } from 'react-router';
 import classnames from 'classnames';
 
 import { createMuiTheme, ThemeProvider, useTheme } from '@material-ui/core';
 import { FirebaseProvider } from '../firebase/FirebaseProvider';
 
-import { Dashboard } from '../containers/Dashboard/Dashboard';
 import { useThemeStyles } from '../hooks/useThemeStyles';
 import { history, store } from './configureStore';
 import styles from './App.module.css';
+import { RootRoute } from './RootRoute';
 
 export const AppTheme: FunctionComponent = ({ children }) => {
   const theme = useTheme();
@@ -36,14 +35,7 @@ export const App = () => {
         <ConnectedRouter history={history}>
           <ThemeProvider theme={theme}>
             <AppTheme>
-              <Switch>
-                <Route exact path="/">
-                  <Dashboard />
-                </Route>
-                <Route>
-                  <Redirect to={'/'} />
-                </Route>
-              </Switch>
+              <RootRoute />
             </AppTheme>
           </ThemeProvider>
         </ConnectedRouter>

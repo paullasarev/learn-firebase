@@ -1,4 +1,5 @@
 import { DefaultRootState } from 'react-redux';
+import { pathLens, replace } from 'lodash-lens';
 
 import { Action, FB_FILESTORE_GET_COLLECTION, FB_STORAGE_LIST } from './actions';
 
@@ -29,20 +30,13 @@ export function firebase(state = initialState, action: Action) {
   switch (action.type) {
     case FB_FILESTORE_GET_COLLECTION: {
       const { name, data } = action.payload;
-      return {
-        ...state,
-        collections: {
-          ...state.collections,
-          [name]: data,
-        },
-      };
+      const lens = pathLens(['collections', name]);
+      return replace(lens, data, state);
     }
     case FB_STORAGE_LIST: {
       const { data } = action.payload;
-      return {
-        ...state,
-        storage: data,
-      };
+      const lens = pathLens('storage');
+      return replace(lens, data, state);
     }
     default:
       return state;
