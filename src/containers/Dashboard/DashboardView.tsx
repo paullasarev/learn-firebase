@@ -28,7 +28,7 @@ export const DashboardView: FunctionComponent<DashboardViewProps> = ({ projects,
 
   const handleChange = useCallback((event, newValue) => {
     onTab(newValue);
-  }, []);
+  }, [onTab]);
 
   return (
     <Paper className={styles.Dashboard}>

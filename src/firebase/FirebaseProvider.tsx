@@ -1,25 +1,59 @@
-import React, { createContext, useCallback, useMemo } from 'react';
+import React, { createContext, useCallback, useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import { map } from 'lodash';
+import { map, get, pick } from 'lodash';
 
 import { FirebaseApp } from './FirebaseApp';
-import { fbFilestoreGetCollection, fbStorageList } from './actions';
+import {
+  fbFilestoreGetCollection,
+  fbSetAuthInfo,
+  fbSignInError, fbSignInStart,
+  fbSignInSuccess,
+  fbStorageList
+} from './actions';
+import { AuthInfo, emptyAuthInfo, User, UserProps } from './types';
 
 const FirebaseContext = createContext({
-  db: {} as any,
-  database: {} as any,
+  // db: {} as any,
+  // database: {} as any,
   api: {} as any,
+  // auth: {} as any,
 });
 
 export { FirebaseContext };
+
+function makeUser(user: any): User {
+  return pick(user, UserProps) as User;
+}
 
 export const FirebaseProvider = ({ children }: { children: any }) => {
   const dispatch = useDispatch();
 
   const db = FirebaseApp.firestore();
-  const database = FirebaseApp.database();
+  // const database = FirebaseApp.database();
   const storage = FirebaseApp.storage();
   const storageRef = storage.ref();
+  const auth = FirebaseApp.auth();
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user: any) => {
+      let authInfo: AuthInfo = emptyAuthInfo;
+      if (user === null) {
+      } else if (user.isAnonymous === true) {
+        authInfo = {
+          isSignedIn: true,
+          providerId: 'anonymous',
+          user: makeUser(user),
+        };
+      } else if (user.providerData && user.providerData[0]) {
+        authInfo = {
+          isSignedIn: true,
+          providerId: get(user, 'providerData.0.providerId', 'unknown'),
+          user: makeUser(user),
+        };
+      }
+      dispatch(fbSetAuthInfo(authInfo));
+    });
+  }, [dispatch, auth]);
 
   const filestoreLoadCollection = useCallback(
     (name: string) => {
@@ -42,18 +76,31 @@ export const FirebaseProvider = ({ children }: { children: any }) => {
     });
   }, [storageRef, dispatch]);
 
-  const firebase = useMemo(() => {
+  const signInWithEmailPassword = useCallback( (email, password) => {
+    dispatch(fbSignInStart(email));
+    auth.signInWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        dispatch(fbSignInSuccess(user));
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        dispatch(fbSignInError(errorCode, errorMessage));
+      });
+  }, [dispatch, auth]);
+
+  const firebaseContextValue = useMemo(() => {
     return {
-      database,
-      db,
-      storage,
-      storageRef,
       api: {
         filestoreLoadCollection,
         storageListFiles,
+        signInWithEmailPassword,
       },
     };
-  }, [db, database, filestoreLoadCollection, storage, storageRef, storageListFiles]);
+  }, [filestoreLoadCollection, storageListFiles, signInWithEmailPassword]);
 
-  return <FirebaseContext.Provider value={firebase}>{children}</FirebaseContext.Provider>;
+  return (
+    <FirebaseContext.Provider value={firebaseContextValue}>{children}</FirebaseContext.Provider>
+  );
 };
