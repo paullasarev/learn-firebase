@@ -1,6 +1,7 @@
 import { DefaultRootState } from 'react-redux';
 import { pathLens, replace } from 'lodash-lens';
 
+import { compose } from 'redux';
 import {
   Action,
   FB_FILESTORE_GET_COLLECTION,
@@ -9,7 +10,7 @@ import {
   FB_SIGN_IN_SUCCESS,
   FB_STORAGE_LIST
 } from './actions';
-import { AuthInfo, emptyAuthInfo } from './types';
+import { AuthInfo } from './types';
 
 interface State {
   collections: {
@@ -23,8 +24,12 @@ interface State {
 const initialState: State = {
   collections: {},
   storage: [],
-  authInfo: emptyAuthInfo,
-  signInInProgress: false,
+  authInfo: {
+    isSignedIn: true,
+    providerId: 'none',
+    user: null,
+  },
+  signInInProgress: true,
 };
 
 interface RootState {
@@ -60,7 +65,11 @@ export function firebase(state = initialState, action: Action) {
     case FB_SET_AUTH_INFO: {
       const { authInfo } = action.payload;
       const lens = pathLens('authInfo');
-      return replace(lens, authInfo, state);
+      const func: any = compose(
+        replace(signInInProgressLens, false),
+        replace(lens, authInfo),
+      );
+      return func(state);
     }
     case FB_SIGN_IN_START: {
       return replace(signInInProgressLens, true, state);

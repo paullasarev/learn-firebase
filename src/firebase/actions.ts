@@ -62,6 +62,13 @@ export function fbSignInError(errorCode: number, errorMessage: string) {
   } as const;
 }
 
+export const FB_SIGN_OUT_SUCCESS = 'FB_SIGN_OUT_SUCCESS';
+export function fbSignOutSuccess() {
+  return {
+    type: FB_SIGN_OUT_SUCCESS,
+  } as const;
+}
+
 export type Action =
   | ReturnType<typeof fbFilestoreGetCollection>
   | ReturnType<typeof fbStorageList>
@@ -69,4 +76,5 @@ export type Action =
   | ReturnType<typeof fbSignInSuccess>
   | ReturnType<typeof fbSignInStart>
   | ReturnType<typeof fbSignInError>
+  | ReturnType<typeof fbSignOutSuccess>
 ;

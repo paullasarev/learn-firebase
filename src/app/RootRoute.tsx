@@ -3,23 +3,30 @@ import { Redirect, Route, Switch } from 'react-router';
 
 import { Dashboard } from '../containers/Dashboard/Dashboard';
 import { Authenticated } from '../containers/Authenticated/Authenticated';
+import { AppRouteKey, AppRoutePath } from './routes';
+
+const pathLogo = AppRoutePath(AppRouteKey.DASHBOARD_LOGO);
+const pathProjects = AppRoutePath(AppRouteKey.DASHBOARD_PROJECTS);
+const pathStorage = AppRoutePath(AppRouteKey.DASHBOARD_STORAGE);
 
 export const RootRoute: FunctionComponent = () => {
   return (
     <Switch>
       <Authenticated>
-        <Route path="/dashboard/logo">
-          <Dashboard path="/dashboard/logo" />
-        </Route>
-        <Route path="/dashboard/projects">
-          <Dashboard path="/dashboard/projects" />
-        </Route>
-        <Route path="/dashboard/storage">
-          <Dashboard path="/dashboard/storage" />
-        </Route>
-        <Route>
-          <Redirect to={'/dashboard/logo'} />
-        </Route>
+        <Switch>
+          <Route exact path={pathLogo}>
+            <Dashboard path={pathLogo} />
+          </Route>
+          <Route exact path={pathProjects}>
+            <Dashboard path={pathProjects} />
+          </Route>
+          <Route exact path={pathStorage}>
+            <Dashboard path={pathStorage} />
+          </Route>
+          <Route>
+            <Redirect to={pathLogo} />
+          </Route>
+        </Switch>
       </Authenticated>
     </Switch>
   );

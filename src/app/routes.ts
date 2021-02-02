@@ -21,3 +21,7 @@ export const AppRoutes: AppRoutesType = {
     path: '/dashboard/storage'
   },
 };
+
+export function AppRoutePath(key: AppRouteKey) {
+  return AppRoutes[key].path;
+}

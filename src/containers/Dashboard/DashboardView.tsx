@@ -1,6 +1,6 @@
 import { FunctionComponent, useCallback } from 'react';
 import { TabContext, TabPanel, TabList } from '@material-ui/lab';
-import { AppBar, makeStyles, Paper, Tab } from '@material-ui/core';
+import { AppBar, Button, makeStyles, Paper, Tab, Toolbar } from '@material-ui/core';
 
 import AppLogo from '../../components/AppLogo/AppLogo';
 import { Projects } from '../../components/Projects/Projects';
@@ -14,6 +14,7 @@ export interface DashboardViewProps {
   storage: StorageItem[];
   path: string;
   onTab: (value: string) => void;
+  onSignOut: () => void;
 }
 
 export const useStyles = makeStyles((theme) => ({
@@ -21,33 +22,51 @@ export const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
   },
+  grow: {
+    flexGrow: 1,
+  },
 }));
 
-export const DashboardView: FunctionComponent<DashboardViewProps> = ({ projects, storage, path, onTab }) => {
+export const DashboardView: FunctionComponent<DashboardViewProps> = ({
+  projects,
+  storage,
+  path,
+  onTab,
+  onSignOut,
+}) => {
   const classes = useStyles();
 
-  const handleChange = useCallback((event, newValue) => {
-    onTab(newValue);
-  }, [onTab]);
+  const handleChange = useCallback(
+    (event, newValue) => {
+      onTab(newValue);
+    },
+    [onTab],
+  );
 
   return (
     <Paper className={styles.Dashboard}>
       <TabContext value={path}>
         <AppBar position="static" className={classes.root}>
-          <TabList onChange={handleChange} aria-label="Dashboard">
-            <Tab label="App Logo" value={AppRoutes.DASHBOARD_LOGO.path} />
-            <Tab label="Projects" value={AppRoutes.DASHBOARD_PROJECTS.path} />
-            <Tab label="Storage" value={AppRoutes.DASHBOARD_STORAGE.path} />
-          </TabList>
+          <Toolbar>
+            <TabList onChange={handleChange} aria-label="Dashboard">
+              <Tab label="App Logo" value={AppRoutes.DASHBOARD_LOGO.path} />
+              <Tab label="Projects" value={AppRoutes.DASHBOARD_PROJECTS.path} />
+              <Tab label="Storage" value={AppRoutes.DASHBOARD_STORAGE.path} />
+            </TabList>
+            <div className={classes.grow} />
+            <Button color="inherit" onClick={onSignOut}>
+              Sign Out
+            </Button>
+          </Toolbar>
         </AppBar>
         <TabPanel value={AppRoutes.DASHBOARD_LOGO.path} className={styles.TabPanel}>
           <AppLogo />
         </TabPanel>
         <TabPanel value={AppRoutes.DASHBOARD_PROJECTS.path} className={styles.TabPanel}>
-          <Projects items={projects}/>
+          <Projects items={projects} />
         </TabPanel>
         <TabPanel value={AppRoutes.DASHBOARD_STORAGE.path} className={styles.TabPanel}>
-          <FirebaseStorage items={storage}/>
+          <FirebaseStorage items={storage} />
         </TabPanel>
       </TabContext>
     </Paper>

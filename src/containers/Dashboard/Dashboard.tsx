@@ -31,8 +31,12 @@ export const Dashboard: FunctionComponent<DashboardProps> = () => {
     [dispatch],
   );
 
+  const onSignOut = useCallback(() => {
+    api.signOut();
+  }, []);
+
   const projects = useSelectorFactory<Project[]>(getCollection, 'projects');
   const storage = useSelectorFactory<StorageItem[]>(getStorage);
 
-  return <DashboardView {...{ projects, storage, path, onTab }} />;
+  return <DashboardView {...{ projects, storage, path, onTab, onSignOut }} />;
 };

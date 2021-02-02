@@ -7,7 +7,7 @@ import {
   fbFilestoreGetCollection,
   fbSetAuthInfo,
   fbSignInError, fbSignInStart,
-  fbSignInSuccess,
+  fbSignInSuccess, fbSignOutSuccess,
   fbStorageList
 } from './actions';
 import { AuthInfo, emptyAuthInfo, User, UserProps } from './types';
@@ -83,11 +83,16 @@ export const FirebaseProvider = ({ children }: { children: any }) => {
         const user = userCredential.user;
         dispatch(fbSignInSuccess(user));
       })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
+      .catch(({errorCode, errorMessage}) => {
         dispatch(fbSignInError(errorCode, errorMessage));
       });
+  }, [dispatch, auth]);
+
+  const signOut = useCallback(() => {
+    auth.signOut()
+    .then(() => {
+      dispatch(fbSignOutSuccess());
+    });
   }, [dispatch, auth]);
 
   const firebaseContextValue = useMemo(() => {
@@ -96,6 +101,7 @@ export const FirebaseProvider = ({ children }: { children: any }) => {
         filestoreLoadCollection,
         storageListFiles,
         signInWithEmailPassword,
+        signOut,
       },
     };
   }, [filestoreLoadCollection, storageListFiles, signInWithEmailPassword]);
