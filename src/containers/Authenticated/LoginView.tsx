@@ -23,6 +23,8 @@ const useStyles = makeStyles((theme: Theme) =>
         margin: theme.spacing(1),
         width: 200,
       },
+      height: '67%',
+      display: 'flex',
     },
   }),
 );
@@ -62,7 +64,7 @@ export const LoginView: FunctionComponent<LoginViewProps> = ({ onSubmit, inProgr
         {inProgress ? (
           <CircularProgress />
         ) : (
-          <Button variant="contained" color="primary" onClick={onClick}>
+          <Button variant="contained" color="inherit" onClick={onClick}>
             "Sign In"
           </Button>
         )}
