@@ -7,6 +7,7 @@ import { AppRouteKey, AppRoutePath } from './routes';
 
 const pathLogo = AppRoutePath(AppRouteKey.DASHBOARD_LOGO);
 const pathProjects = AppRoutePath(AppRouteKey.DASHBOARD_PROJECTS);
+const pathGqlProjects = AppRoutePath(AppRouteKey.DASHBOARD_GQL_PROJECTS);
 const pathStorage = AppRoutePath(AppRouteKey.DASHBOARD_STORAGE);
 
 export const RootRoute: FunctionComponent = () => {
@@ -19,6 +20,9 @@ export const RootRoute: FunctionComponent = () => {
           </Route>
           <Route exact path={pathProjects}>
             <Dashboard path={pathProjects} />
+          </Route>
+          <Route exact path={pathGqlProjects}>
+            <Dashboard path={pathGqlProjects} />
           </Route>
           <Route exact path={pathStorage}>
             <Dashboard path={pathStorage} />

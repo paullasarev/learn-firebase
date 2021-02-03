@@ -6,6 +6,6 @@ export function useSelectorFactory<TSelected>(
   ...args: any[]
 ) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  return useSelector(useMemo(() => selectorFactory(...args), [selectorFactory, ...args]));
+  return useSelector<any, TSelected>(useMemo(() => selectorFactory(...args), [selectorFactory, ...args]));
 }
 

@@ -11,6 +11,7 @@ import styles from './Dashboard.module.css';
 
 export interface DashboardViewProps {
   projects: Project[];
+  gqlProjects: Project[];
   storage: StorageItem[];
   path: string;
   onTab: (value: string) => void;
@@ -29,6 +30,7 @@ export const useStyles = makeStyles((theme) => ({
 
 export const DashboardView: FunctionComponent<DashboardViewProps> = ({
   projects,
+                                                                       gqlProjects,
   storage,
   path,
   onTab,
@@ -51,6 +53,7 @@ export const DashboardView: FunctionComponent<DashboardViewProps> = ({
             <TabList onChange={handleChange} aria-label="Dashboard">
               <Tab label="App Logo" value={AppRoutes.DASHBOARD_LOGO.path} />
               <Tab label="Projects" value={AppRoutes.DASHBOARD_PROJECTS.path} />
+              <Tab label="Gql Projects" value={AppRoutes.DASHBOARD_GQL_PROJECTS.path} />
               <Tab label="Storage" value={AppRoutes.DASHBOARD_STORAGE.path} />
             </TabList>
             <div className={classes.grow} />
@@ -67,6 +70,9 @@ export const DashboardView: FunctionComponent<DashboardViewProps> = ({
         </TabPanel>
         <TabPanel value={AppRoutes.DASHBOARD_STORAGE.path} className={styles.TabPanel}>
           <FirebaseStorage items={storage} />
+        </TabPanel>
+        <TabPanel value={AppRoutes.DASHBOARD_GQL_PROJECTS.path} className={styles.TabPanel}>
+          <Projects items={gqlProjects} />
         </TabPanel>
       </TabContext>
     </Paper>

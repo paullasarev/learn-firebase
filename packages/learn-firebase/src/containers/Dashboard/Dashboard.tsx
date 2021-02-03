@@ -1,11 +1,13 @@
 import { FunctionComponent, useCallback, useContext, useEffect } from 'react';
 
 import { useRouteMatch } from 'react-router';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { push } from 'connected-react-router';
 import { FirebaseContext } from '../../firebase/FirebaseProvider';
 import { getCollection, getStorage } from '../../firebase/reducer';
 import { useSelectorFactory } from '../../hooks/useSelecorFactory';
+import { gqlGetProjects } from '../../graphql/actions';
+import { gqlGetProjectsSelector } from '../../graphql/selectors';
 import { DashboardView } from './DashboardView';
 import { Project, StorageItem } from './types';
 
@@ -22,10 +24,11 @@ export const Dashboard: FunctionComponent<DashboardProps> = () => {
   useEffect(() => {
     api.filestoreLoadCollection('projects');
     api.storageListFiles();
-  }, [api]);
+    dispatch(gqlGetProjects());
+  }, [api, dispatch]);
 
   const onTab = useCallback(
-    (path) => {
+    (path: string) => {
       dispatch(push(path));
     },
     [dispatch],
@@ -33,10 +36,11 @@ export const Dashboard: FunctionComponent<DashboardProps> = () => {
 
   const onSignOut = useCallback(() => {
     api.signOut();
-  }, []);
+  }, [api]);
 
   const projects = useSelectorFactory<Project[]>(getCollection, 'projects');
   const storage = useSelectorFactory<StorageItem[]>(getStorage);
+  const gqlProjects = useSelector(gqlGetProjectsSelector);
 
-  return <DashboardView {...{ projects, storage, path, onTab, onSignOut }} />;
+  return <DashboardView {...{ projects, gqlProjects, storage, path, onTab, onSignOut }} />;
 };

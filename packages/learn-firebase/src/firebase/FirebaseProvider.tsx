@@ -2,6 +2,7 @@ import React, { createContext, useCallback, useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { map, get, pick } from 'lodash';
 
+import firebase from 'firebase';
 import { FirebaseApp } from './FirebaseApp';
 import {
   fbFilestoreGetCollection,
@@ -11,6 +12,9 @@ import {
   fbStorageList
 } from './actions';
 import { AuthInfo, emptyAuthInfo, User, UserProps } from './types';
+
+type UserCredential = firebase.auth.UserCredential;
+type ListResult = firebase.storage.ListResult;
 
 const FirebaseContext = createContext({
   // db: {} as any,
@@ -59,10 +63,10 @@ export const FirebaseProvider = ({ children }: { children: any }) => {
     (name: string) => {
       db.collection(name)
         .get()
-        .then((snapshot) => {
-          const data: any[] = [];
+        .then((snapshot: { forEach: (arg0: (doc: any) => void) => void; }) => {
+          const data: object[] = [];
           snapshot.forEach((doc) => {
-            data.push(doc.data());
+            data.push(doc.data() as any);
           });
           dispatch(fbFilestoreGetCollection(name, data));
         });
@@ -71,19 +75,19 @@ export const FirebaseProvider = ({ children }: { children: any }) => {
   );
   const storageListFiles = useCallback(() => {
     const listRef = storageRef;
-    listRef.listAll().then((list) => {
+    listRef.listAll().then((list: ListResult) => {
       dispatch(fbStorageList(map(list.items, ({ name, fullPath }) => ({ name, fullPath }))));
     });
   }, [storageRef, dispatch]);
 
-  const signInWithEmailPassword = useCallback( (email, password) => {
+  const signInWithEmailPassword = useCallback( (email: string, password: string) => {
     dispatch(fbSignInStart(email));
     auth.signInWithEmailAndPassword(email, password)
-      .then((userCredential) => {
+      .then((userCredential: UserCredential) => {
         const user = userCredential.user;
         dispatch(fbSignInSuccess(user));
       })
-      .catch(({errorCode, errorMessage}) => {
+      .catch(({errorCode, errorMessage}: { errorCode: number, errorMessage: string }) => {
         dispatch(fbSignInError(errorCode, errorMessage));
       });
   }, [dispatch, auth]);
@@ -104,7 +108,7 @@ export const FirebaseProvider = ({ children }: { children: any }) => {
         signOut,
       },
     };
-  }, [filestoreLoadCollection, storageListFiles, signInWithEmailPassword]);
+  }, [filestoreLoadCollection, storageListFiles, signInWithEmailPassword, signOut]);
 
   return (
     <FirebaseContext.Provider value={firebaseContextValue}>{children}</FirebaseContext.Provider>
