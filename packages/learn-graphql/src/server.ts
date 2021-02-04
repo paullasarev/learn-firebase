@@ -6,6 +6,9 @@ import { graphql, buildSchema } from 'graphql';
 import morgan from 'morgan';
 import cors from 'cors';
 
+import { gcGetProjects } from './firestore';
+import * as Process from 'process';
+
 const PORT = 4000;
 
 // Construct a schema, using GraphQL schema language
@@ -20,16 +23,27 @@ const schema = buildSchema(`
   }
 `);
 
+
+
 // The root provides a resolver function for each API endpoint
 const root = {
   hello: () => {
     return 'Hello world!';
   },
   projects: () => {
-    return [
-      { name: 'pr1', description: 'project 1'},
-      { name: 'pr2', description: 'project 2'},
-    ]
+    console.log('GOOGLE_APPLICATION_CREDENTIALS', Process.env.GOOGLE_APPLICATION_CREDENTIALS)
+    return gcGetProjects().then((data)=>{
+      const result: any[] = [];
+      data.forEach((doc) => {
+        console.log(doc.data())
+        result.push(doc.data());
+      })
+      return result;
+    })
+    // return [
+    //   { name: 'pr1', description: 'project 1'},
+    //   { name: 'pr2', description: 'project 2'},
+    // ]
   }
 };
 

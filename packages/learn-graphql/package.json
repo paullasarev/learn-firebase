@@ -4,7 +4,7 @@
   "description": "learn graphql",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./src/server.ts",
+    "start": "cross-env GOOGLE_APPLICATION_CREDENTIALS='./secrets/api.json' nodemon ./src/server.ts",
     "test": "npx ts-jest"
   },
   "keywords": [
@@ -22,6 +22,7 @@
     "@types/morgan": "^1.9.2",
     "@types/winston": "^2.4.4",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "express": "^4.17.1",
     "express-graphql": "^0.12.0",
     "express-winston": "^4.0.5",
