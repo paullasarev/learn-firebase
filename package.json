@@ -4,6 +4,7 @@
   "description": "",
   "main": ".eslintrc.js",
   "scripts": {
+    "bootstrap": "lerna bootstrap",
     "start": "lerna run start --stream",
     "test": "lerna run test"
   },
