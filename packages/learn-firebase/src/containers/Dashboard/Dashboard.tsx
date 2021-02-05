@@ -7,7 +7,8 @@ import { FirebaseContext } from '../../firebase/FirebaseProvider';
 import { getCollection, getStorage } from '../../firebase/reducer';
 import { useSelectorFactory } from '../../hooks/useSelecorFactory';
 import { gqlGetProjects } from '../../graphql/actions';
-import { gqlGetProjectsSelector } from '../../graphql/selectors';
+// import { gqlGetProjectsSelector } from '../../graphql/selectors';
+import { useProjects } from '../../graphql/hooks';
 import { DashboardView } from './DashboardView';
 import { Project, StorageItem } from './types';
 
@@ -40,7 +41,8 @@ export const Dashboard: FunctionComponent<DashboardProps> = () => {
 
   const projects = useSelectorFactory<Project[]>(getCollection, 'projects');
   const storage = useSelectorFactory<StorageItem[]>(getStorage);
-  const gqlProjects = useSelector(gqlGetProjectsSelector);
+  // const gqlProjects = useSelector(gqlGetProjectsSelector);
+  const gqlProjects = useProjects();
 
   return <DashboardView {...{ projects, gqlProjects, storage, path, onTab, onSignOut }} />;
 };

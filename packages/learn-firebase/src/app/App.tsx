@@ -2,11 +2,13 @@ import React, { FunctionComponent, useMemo } from 'react';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import classnames from 'classnames';
-
 import { createMuiTheme, ThemeProvider, useTheme } from '@material-ui/core';
+import { ApolloProvider } from '@apollo/client';
+
 import { FirebaseProvider } from '../firebase/FirebaseProvider';
 
 import { useThemeStyles } from '../hooks/useThemeStyles';
+import { apolloClient } from '../graphql/apollo';
 import { history, store } from './configureStore';
 import styles from './App.module.css';
 import { RootRoute } from './RootRoute';
@@ -31,15 +33,17 @@ export const App = () => {
   );
   return (
     <Provider store={store}>
-      <FirebaseProvider>
-        <ConnectedRouter history={history}>
-          <ThemeProvider theme={theme}>
-            <AppTheme>
-              <RootRoute />
-            </AppTheme>
-          </ThemeProvider>
-        </ConnectedRouter>
-      </FirebaseProvider>
+      <ApolloProvider client={apolloClient} >
+        <FirebaseProvider>
+          <ConnectedRouter history={history}>
+            <ThemeProvider theme={theme}>
+              <AppTheme>
+                <RootRoute />
+              </AppTheme>
+            </ThemeProvider>
+          </ConnectedRouter>
+        </FirebaseProvider>
+      </ApolloProvider>
     </Provider>
   );
 };
