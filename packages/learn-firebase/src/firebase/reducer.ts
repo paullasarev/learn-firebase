@@ -12,7 +12,7 @@ import {
 } from './actions';
 import { AuthInfo } from './types';
 
-interface State {
+export interface State {
   collections: {
     [k: string]: any;
   };
@@ -21,7 +21,7 @@ interface State {
   signInInProgress: boolean;
 }
 
-const initialState: State = {
+export const initialState: State = {
   collections: {},
   storage: [],
   authInfo: {
