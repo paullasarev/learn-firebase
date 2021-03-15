@@ -1,0 +1,4 @@
+
+sagaGraphql() sync* {
+
+}
