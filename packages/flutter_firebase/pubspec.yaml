@@ -44,6 +44,7 @@ dev_dependencies:
     sdk: flutter
   json_serializable: ^3.0.0
   redux_remote_devtools: ^2.0.0
+  test: ^1.16.5
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

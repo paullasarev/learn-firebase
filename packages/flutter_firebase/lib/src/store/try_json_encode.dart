@@ -1,9 +1,9 @@
 import 'dart:convert' show jsonEncode;
 
-String tryJsonEncode(action) {
+String tryJsonEncode(obj) {
   try {
-    return jsonEncode(action);
+    return jsonEncode(obj);
   } catch (err) {
-    return '';
+    return obj.toString();
   }
 }
