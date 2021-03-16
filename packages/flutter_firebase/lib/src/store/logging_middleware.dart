@@ -2,14 +2,13 @@ import 'package:redux/redux.dart' show Store, MiddlewareClass, NextDispatcher;
 // import 'package:logging/logging.dart' show Logger;
 import 'dart:developer' show log;
 
-import 'package:flutter_firebase/src/store/try_json_encode.dart' show tryJsonEncode;
-
+// import 'package:flutter_firebase/src/store/try_json_encode.dart' show tryJsonEncode;
 
 class LoggingMiddleware<State> extends MiddlewareClass<State> {
   // final Logger _logger;
 
   // LoggingMiddleware(): _logger = Logger('Redux Logger':);
-  
+
   int count = 0;
 
   @override
