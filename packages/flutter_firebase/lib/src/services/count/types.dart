@@ -9,4 +9,3 @@ class CountState {
 
   Map<String, dynamic> toJson() => _$CountStateToJson(this);
 }
-
