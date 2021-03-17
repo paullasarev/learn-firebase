@@ -7,9 +7,8 @@ class Project {
   String name;
   String description;
   Project(this.name, this.description);
-  
-  factory Project.fromJson(Map<String, dynamic> json) =>
-      _$ProjectFromJson(json);
+
+  factory Project.fromJson(Map<String, dynamic> json) => _$ProjectFromJson(json);
 
   Map<String, dynamic> toJson() => _$ProjectToJson(this);
 }
@@ -20,8 +19,7 @@ class ProjectState {
 
   ProjectState(this.projects);
 
-  factory ProjectState.fromJson(Map<String, dynamic> json) =>
-      _$ProjectStateFromJson(json);
+  factory ProjectState.fromJson(Map<String, dynamic> json) => _$ProjectStateFromJson(json);
 
   Map<String, dynamic> toJson() => _$ProjectStateToJson(this);
 }

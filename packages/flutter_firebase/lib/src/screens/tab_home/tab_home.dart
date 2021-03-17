@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' show Theme;
 import 'package:flutter/foundation.dart' show Key;
 import 'package:flutter/widgets.dart' show Widget, BuildContext;
+import 'package:flutter_firebase/src/services/projects/selectors.dart';
 import 'package:flutter_hooks/flutter_hooks.dart' show HookWidget;
 import 'package:flutter_redux_hooks/flutter_redux_hooks.dart' show useDispatch, useSelector;
 
@@ -17,11 +18,13 @@ class TabHomePage extends HookWidget {
   Widget build(BuildContext context) {
     final count = useSelector(countSelector);
     final dispatch = useDispatch<StoreState>();
+    final projects = useSelector(projectsSelector);
 
     void incrementCounter() {
       dispatch(IncrementAction());
     }
 
-    return tabHomeView(title: this.title, theme: Theme.of(context), count: count, onAdd: incrementCounter);
+    return tabHomeView(
+        title: this.title, theme: Theme.of(context), count: count, onAdd: incrementCounter, projects: projects);
   }
 }
