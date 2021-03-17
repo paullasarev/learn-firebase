@@ -1,7 +1,8 @@
 import 'package:flutter/foundation.dart' show ValueNotifier;
 import 'package:flutter/material.dart' show MaterialApp, ThemeData, Colors;
 import 'package:flutter/widgets.dart' show Widget, BuildContext, StatelessWidget;
-import 'package:flutter_firebase/src/screens/my_home_page/my_home_page.dart';
+// import 'package:flutter_firebase/src/screens/my_home_page/my_home_page.dart';
+import 'package:flutter_firebase/src/screens/tab_home/tab_home.dart';
 import 'dart:developer' show log;
 import 'package:flutter_redux_hooks/flutter_redux_hooks.dart' show StoreProvider;
 import 'package:graphql_flutter/graphql_flutter.dart' show GraphQLClient, GraphQLProvider;
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
                 // is not restarted.
                 primarySwatch: Colors.blue,
               ),
-              home: MyHomePage(title: 'Flutter Demo Это Home Page'),
+              home: TabHomePage(title: 'Flutter Demo Это Home Page'),
             )));
   }
 }

@@ -4,31 +4,15 @@ import 'package:flutter/widgets.dart' show Widget, BuildContext;
 import 'package:flutter_hooks/flutter_hooks.dart' show HookWidget;
 import 'package:flutter_redux_hooks/flutter_redux_hooks.dart' show useDispatch, useSelector;
 
-// import 'package:flutter_firebase/src/services/count/actions.dart'
-//     show IncrementAction;
 import 'package:flutter_firebase/src/store/types.dart' show StoreState;
 import 'package:flutter_firebase/src/services/count/selectors.dart' show countSelector;
-import 'package:flutter_firebase/src/screens/my_home_page/my_home_page_view.dart' show myHomePageView;
 import 'package:flutter_firebase/src/services/count/actions.dart' show IncrementAction;
+import 'package:flutter_firebase/src/screens/tab_home/tab_home_view.dart' show tabHomeView;
 
 // class _MyHomePageState extends State<MyHomePage> {
-class MyHomePage extends HookWidget {
-  // int _counter = 0;
+class TabHomePage extends HookWidget {
   final String title;
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  // void _incrementCounter() {
-  //   // log('counter ${_counter}\n');
-  //   dispatch(IncrementAction());
-  //   // setState(() {
-  //   //   // This call to setState tells the Flutter framework that something has
-  //   //   // changed in this State, which causes it to rerun the build method below
-  //   //   // so that the display can reflect the updated values. If we changed
-  //   //   // _counter without calling setState(), then the build method would not be
-  //   //   // called again, and so nothing would appear to happen.
-  //   //   _counter++;
-  //   // });
-  // }
+  TabHomePage({Key key, this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +31,6 @@ class MyHomePage extends HookWidget {
       dispatch(IncrementAction());
     }
 
-    return myHomePageView(title: this.title, theme: Theme.of(context), count: count, onAdd: incrementCounter);
+    return tabHomeView(title: this.title, theme: Theme.of(context), count: count, onAdd: incrementCounter);
   }
 }
