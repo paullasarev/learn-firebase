@@ -9,7 +9,7 @@
   },
   "scripts": {
     "generate": "flutter pub run build_runner build",
-    "test": "flutter test"
+    "test": "flutter test lib"
   },
   "author": "",
   "license": "MIT"

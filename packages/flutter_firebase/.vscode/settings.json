@@ -1,0 +1,8 @@
+{
+    "dart.allowTestsOutsideTestFolder": true,
+    "dart.flutterTestAdditionalArgs": [
+        "lib"
+    ],
+    "testing.enableProblemDiagnostics": true,
+    "testing.automaticallyOpenPeekView": "failureAnywhere"
+}
