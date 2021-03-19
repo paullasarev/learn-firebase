@@ -5,5 +5,9 @@ import 'package:flutter_firebase/src/services/projects/actions.dart' show SetPro
 
 sagaProjects() sync* {
   yield Put(SetProjectsAction([Project('test', 'test description')]));
-  yield Put(SetProjectsAction([Project('test2', 'test2 description')]));
+  yield Put(SetProjectsAction([
+    Project('test1', 'description 1'),
+    Project('test2', 'description 2'),
+    Project('test3', 'descr 3'),
+  ]));
 }
