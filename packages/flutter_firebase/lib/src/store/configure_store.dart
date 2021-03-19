@@ -1,3 +1,4 @@
+import 'package:flutter_firebase/src/store/watch_actions/watch_actions.dart';
 import 'package:redux/redux.dart' show Store;
 import 'package:redux_saga/redux_saga.dart' show applyMiddleware, createSagaMiddleware;
 // import 'package:logging/logging.dart' show Logger;
@@ -25,7 +26,12 @@ Future<Store<StoreState>> configureStore() async {
   final store = DevToolsStore<StoreState>(
     rootReducer,
     initialState: null,
-    middleware: [applyMiddleware(sagaMiddleware), /*loggingMiddleware,*/ remoteDevtools],
+    middleware: [
+      applyMiddleware(sagaMiddleware),
+      //loggingMiddleware,
+      WatchActions.middleware,
+      remoteDevtools,
+    ],
   );
 
   remoteDevtools.store = store;

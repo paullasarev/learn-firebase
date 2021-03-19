@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase/src/components/counter_view.dart';
+import 'package:flutter_firebase/src/components/counter_view/counter_view.dart';
 import 'package:flutter_firebase/src/components/projects_view/projects_view.dart';
 import 'package:flutter_firebase/src/services/projects/types.dart';
 
-Widget tabHomeView({String title, int count, Function onAdd, ThemeData theme, List<Project> projects}) {
+Widget tabHomeView(
+    {String title, int count, Function onAdd, Function onList, ThemeData theme, List<Project> projects}) {
   return DefaultTabController(
     length: 2,
     child: Scaffold(
@@ -18,7 +19,7 @@ Widget tabHomeView({String title, int count, Function onAdd, ThemeData theme, Li
       ),
       body: TabBarView(
         children: [
-          counterView(count: count, theme: theme),
+          counterView(count: count, theme: theme, onList: onList),
           projectsView(theme: theme, projects: projects),
         ],
       ),
