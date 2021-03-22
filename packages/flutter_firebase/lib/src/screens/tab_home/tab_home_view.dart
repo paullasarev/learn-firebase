@@ -1,7 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/src/components/counter_view/counter_view.dart';
 import 'package:flutter_firebase/src/components/projects_view/projects_view.dart';
+import 'package:flutter_firebase/src/components/side_menu/side_menu.dart';
 import 'package:flutter_firebase/src/services/projects/types.dart';
+
+class TabInfo {
+  final int index;
+  final String name;
+  TabInfo(this.index, this.name);
+}
+
+final tabs = [
+  TabInfo(0, 'Counter'),
+  TabInfo(1, 'Projects'),
+];
 
 Widget tabHomeView({
   String title,
@@ -35,5 +47,6 @@ Widget tabHomeView({
       tooltip: 'Increment',
       child: Icon(Icons.add),
     ),
+    drawer: SideMenu(),
   );
 }
