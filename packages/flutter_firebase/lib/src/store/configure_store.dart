@@ -13,12 +13,22 @@ import 'package:flutter_firebase/src/store/root_reducer.dart' show rootReducer;
 import 'package:flutter_firebase/src/store/try_json_encode.dart' show tryJsonEncode;
 
 const DEV_TOOLS_URL = 'localhost:8000';
+// npm install -g remotedev-server
+// remotedev --port 8000
 
 Future<Store<StoreState>> configureStore() async {
   var remoteDevtools = RemoteDevToolsMiddleware(DEV_TOOLS_URL, stateEncoder: tryJsonEncode);
-  await remoteDevtools.connect();
-
   final sagaMiddleware = createSagaMiddleware();
+
+  final middlewares = [
+    applyMiddleware(sagaMiddleware),
+    //loggingMiddleware,
+    WatchActions.middleware,
+  ];
+  try {
+    await remoteDevtools.connect();
+    middlewares.add(remoteDevtools);
+  } catch (err) {}
 
   // final loggingMiddleware = LoggingMiddleware();
 
@@ -26,12 +36,7 @@ Future<Store<StoreState>> configureStore() async {
   final store = DevToolsStore<StoreState>(
     rootReducer,
     initialState: null,
-    middleware: [
-      applyMiddleware(sagaMiddleware),
-      //loggingMiddleware,
-      WatchActions.middleware,
-      remoteDevtools,
-    ],
+    middleware: middlewares,
   );
 
   remoteDevtools.store = store;
