@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:vrouter/vrouter.dart';
+
+class RootDrawer {
+  static DrawerControllerState of(BuildContext context) {
+    final DrawerControllerState drawerControllerState = context.findRootAncestorStateOfType();
+    return drawerControllerState;
+  }
+}
 
 class SideMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final state = RootDrawer.of(context);
     return Drawer(
       // Add a ListView to the drawer. This ensures the user can scroll
       // through the options in the drawer if there isn't enough vertical
@@ -18,17 +27,17 @@ class SideMenu extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: Text('Home'),
+            title: Text('Counter'),
             onTap: () {
-              // Update the state of the app.
-              // ...
+              VRouterData.of(context).push('/counter');
+              state.close();
             },
           ),
           ListTile(
             title: Text('Projects'),
             onTap: () {
-              // Update the state of the app.
-              // ...
+              VRouterData.of(context).push('/projects');
+              state.close();
             },
           ),
         ],
