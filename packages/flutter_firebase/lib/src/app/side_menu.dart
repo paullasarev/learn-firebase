@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vrouter/vrouter.dart';
+import 'package:flutter_firebase/src/app/app_router.dart';
 
 class RootDrawer {
   static DrawerControllerState of(BuildContext context) {
@@ -29,14 +29,14 @@ class SideMenu extends StatelessWidget {
           ListTile(
             title: Text('Counter'),
             onTap: () {
-              VRouterData.of(context).push('/counter');
+              pushRouteByPath(context, '/counter');
               state.close();
             },
           ),
           ListTile(
             title: Text('Projects'),
             onTap: () {
-              VRouterData.of(context).push('/projects');
+              pushRouteByPath(context, '/projects');
               state.close();
             },
           ),
