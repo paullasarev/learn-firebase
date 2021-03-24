@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/src/components/counter_view/counter_view.dart';
 import 'package:flutter_firebase/src/components/projects_view/projects_view.dart';
-import 'package:flutter_firebase/src/components/side_menu/side_menu.dart';
+import 'package:flutter_firebase/src/app/side_menu.dart';
 import 'package:flutter_firebase/src/services/projects/types.dart';
 
 class TabInfo {
